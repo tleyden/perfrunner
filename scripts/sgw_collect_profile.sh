@@ -2,7 +2,7 @@
 
 ## Collect profile data as PDFs and create a .tar.gz file
 
-import os, glob, re, shutil, sys, re, subprocess, tempfile 
+import os, shutil, sys, tempfile 
 
 profile_types = [
     "profile",
