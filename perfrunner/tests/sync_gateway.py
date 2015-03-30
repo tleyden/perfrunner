@@ -54,7 +54,8 @@ class GateloadTest(PerfTest):
     def generate_gateload_configs(self):
         template = self.env.get_template('gateload_config_template.json')
 
-        for idx, gateway in enumerate(self.remote.gateways):
+        for idx, gateload in enumerate(self.remote.gateloads):
+            gateway = self.remote.gateways[idx]
             config_fname = 'templates/gateload_config_{}.json'.format(idx)
             with open(config_fname, 'w') as fh:
                 fh.write(template.render(
