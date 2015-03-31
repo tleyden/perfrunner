@@ -1,5 +1,5 @@
 import time
-import shutil 
+import os
 
 from decorator import decorator
 from fabric import state
@@ -473,9 +473,11 @@ class RemoteLinuxHelper(object):
         self.try_get('sgw_check_logs.out', 'sgw_check_logs_gateload_{}.out'.format(idx))
         expvar_url = "{}:9876/debug/vars".format(local_ip)
         logger.info("Getting gateload expvar from {}".format(expvar_url))
-        self.wget(expvar_url, outdir='/tmp')
-        shutil.move("/tmp/vars", 'gateload_expvar_{}.json'.format(idx))
-        logger.info('Saved gateload_expvar_{}.json'.format(idx))
+
+        dest_file = 'gateload_expvar_{}.json'.format(idx)
+        os.remove(dest_file)
+        self.wget(expvar_url, outdir='.', outfile=dest_file)
+        logger.info('Saved {}'.format(dest_file))
 
 
     @all_gateways
