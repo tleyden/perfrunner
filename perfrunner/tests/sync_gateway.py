@@ -1,6 +1,7 @@
 import json
 import time
 import sys
+import traceback
 from collections import defaultdict, OrderedDict
 
 import numpy as np
@@ -139,6 +140,8 @@ class GateloadTest(PerfTest):
         except:
             print "Exception in collect_kpi"
             print sys.exc_info()[0]
+            traceback.print_exc()
+            traceback.print_stack() 
             logger.interrupt('Test failed because of an exception: {}'.format(sys.exc_info()[0]))
 
 
