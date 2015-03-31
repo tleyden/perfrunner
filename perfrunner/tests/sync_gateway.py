@@ -139,10 +139,10 @@ class GateloadTest(PerfTest):
                 logger.interrupt('Test failed because at least one of the latencies does not meet KPI')
         except:
             print "Exception in collect_kpi"
-            print sys.exc_info()[0]
+            print str(sys.exc_info()[0])
             traceback.print_exc()
             traceback.print_stack() 
-            logger.interrupt('Test failed because of an exception: {}'.format(sys.exc_info()[0]))
+            logger.interrupt('Test failed because of an exception: {}'.format(str(sys.exc_info()[0])))
 
 
     @with_stats
