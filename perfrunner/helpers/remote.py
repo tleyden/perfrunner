@@ -419,7 +419,6 @@ class RemoteLinuxHelper(object):
         self.try_get('sgw_test_info.txt', 'sgw_test_info_{}.txt'.format(index))
         self.try_get('gateway_config.json', 'gateway_config_{}.json'.format(index))
         self.try_get('sgw_check_logs.out', 'sgw_check_logs_gateway_{}.out'.format(index))
-        self.try_get('gateload_expvar_{}.json'.format(index + 1), 'gateload_expvar_{}.json'.format(index + 1))
 
     @all_gateloads
     def uninstall_gateload(self):
@@ -471,6 +470,12 @@ class RemoteLinuxHelper(object):
         self.try_get('gateload.log.gz', 'gateload.log-{}.gz'.format(idx))
         self.try_get('gateload_config.json', 'gateload_config_{}.json'.format(idx))
         self.try_get('sgw_check_logs.out', 'sgw_check_logs_gateload_{}.out'.format(idx))
+        expvar_url = "{}:9876/debug/vars".format(local_ip)
+        logger.info("Getting gateload expvar from {}".format(expvar_url))
+        self.wget(expvar_url, outdir='/tmp')
+        shutil.move("/tmp/vars", 'gateload_expvar_{}.json'.format(idx))
+        logger.info('Saved gateload_expvar_{}.json'.format(idx))
+
 
     @all_gateways
     def collect_profile_data_gateways(self):

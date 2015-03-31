@@ -134,7 +134,7 @@ class GateloadTest(PerfTest):
 
             logger.info('Checking pass or fail')
             if self.errors:
-                logger.interrupt('Test failed because of errors')
+                logger.interrupt('Test failed because of errors: {}'.format(self.errors))
             if 'doesn\'t meet' in ''.join(self.pass_fail):
                 logger.interrupt('Test failed because at least one of the latencies does not meet KPI')
         except:
