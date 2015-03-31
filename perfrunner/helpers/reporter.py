@@ -1,4 +1,5 @@
 import time
+import os
 from datetime import datetime
 from zipfile import ZipFile, ZIP_DEFLATED
 
@@ -258,14 +259,21 @@ class LogReporter(object):
 
     def check_sgw_logs(self):
         num_gateways = self.test.test_config.gateway_settings.num_nodes
+    
         items = ['gateway_{}'.format(i) for i in range(num_gateways)]
         items += ['gateload_{}'.format(i) for i in range(num_gateways)]
         with open('sgw_check_logs_gateload.txt', 'w') as outfile:
             for item in items:
-                outfile.write('\nLog checking at {}:\n'.format(item))
-                with open('sgw_check_logs_{}.out'.format(item)) as infile:
-                    outfile.write(infile.read())
-
+                try:
+                    infileName = 'sgw_check_logs_{}.out'.format(item) 
+                    if not os.path.exists(infileName):
+                        outfile.write('\nFile not found.  Skipping log checking at {}:\n'.format(item))
+                    else:
+                        outfile.write('\nLog checking at {}:\n'.format(item))
+                        with open(infileName) as infile:
+                            outfile.write(infile.read())
+                except:
+                    logger.warn("Exception checking sgw logs: {}.  Ignoring.".format(infileName))
 
 class Reporter(BtrcReporter, SFReporter, LogReporter):
 

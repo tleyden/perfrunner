@@ -468,9 +468,9 @@ class RemoteLinuxHelper(object):
         put('scripts/sgw_check_logs.sh', '/root/sgw_check_logs.sh')
         run('chmod 777 /root/sgw_*.sh')
         run('/root/sgw_check_logs.sh gateload > sgw_check_logs.out', warn_only=True)
-        get('gateload.log.gz', 'gateload.log-{}.gz'.format(idx))
-        get('gateload_config.json', 'gateload_config_{}.json'.format(idx))
-        get('sgw_check_logs.out', 'sgw_check_logs_gateload_{}.out'.format(idx))
+        self.try_get('gateload.log.gz', 'gateload.log-{}.gz'.format(idx))
+        self.try_get('gateload_config.json', 'gateload_config_{}.json'.format(idx))
+        self.try_get('sgw_check_logs.out', 'sgw_check_logs_gateload_{}.out'.format(idx))
 
     @all_gateways
     def collect_profile_data_gateways(self):
@@ -487,7 +487,7 @@ class RemoteLinuxHelper(object):
         put('scripts/sgw_collect_profile.sh', '/root/sgw_collect_profile.sh')
         run('chmod 777 /root/sgw_collect_profile.sh')
         run('/root/sgw_collect_profile.sh /opt/couchbase-sync-gateway/bin/sync_gateway /root', pty=False)
-        get('profile_data.tar.gz', 'profile_data.tar-{}.gz'.format(idx))
+        self.try_get('profile_data.tar.gz', 'profile_data.tar-{}.gz'.format(idx))
 
     @all_hosts
     def clean_mongodb(self):
