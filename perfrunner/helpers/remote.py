@@ -475,7 +475,8 @@ class RemoteLinuxHelper(object):
         logger.info("Getting gateload expvar from {}".format(expvar_url))
 
         dest_file = 'gateload_expvar_{}.json'.format(idx)
-        os.remove(dest_file)
+        if os.path.exists(dest_file):
+            os.remove(dest_file)
         self.wget(expvar_url, outdir='.', outfile=dest_file)
         logger.info('Saved {}'.format(dest_file))
 

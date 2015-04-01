@@ -150,6 +150,7 @@ class GateloadTest(PerfTest):
         time.sleep(self.test_config.gateload_settings.run_time)
 
     def run(self):
+
         self.start_test_info()
 
         self.generate_gateload_configs()
@@ -163,6 +164,9 @@ class GateloadTest(PerfTest):
 
         log_phase('Gateload settings', self.test_config.gateload_settings)
         log_phase('Gateway settings', self.test_config.gateway_settings)
+
+        self.test_config.stats_settings.post_to_sf = 0
+        log_phase('Stats settings', self.test_config.stats_settings)
 
         self.workload()
 
