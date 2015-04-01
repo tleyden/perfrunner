@@ -166,6 +166,7 @@ class GateloadTest(PerfTest):
         log_phase('Gateway settings', self.test_config.gateway_settings)
 
         self.test_config.stats_settings.post_to_sf = 0
+        self.test_config.stats_settings.stats_enabled = 0
         log_phase('Stats settings', self.test_config.stats_settings)
 
         self.workload()
