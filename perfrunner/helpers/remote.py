@@ -478,6 +478,7 @@ class RemoteLinuxHelper(object):
         if os.path.exists(dest_file):
             os.remove(dest_file)
         self.wget(expvar_url, outdir='.', outfile=dest_file)
+        self.try_get(dest_file, dest_file)
         logger.info('Saved {}'.format(dest_file))
 
 
